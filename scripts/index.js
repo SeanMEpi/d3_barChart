@@ -54,8 +54,18 @@ svg.selectAll("rect")
     return yScale(d.value);
   })
   .attr("fill", function(d) {
-  return "rgb(0, 0, " + (d.value * 10) + ")";
-});
+    return "rgb(0, 0, " + (d.value * 10) + ")"
+  })
+  .on("mouseover", function() {
+    d3.select(this)
+      .attr("fill", "orange");
+  })
+  .on("mouseout", function(d) {
+    d3.select(this)
+      .attr("fill", function(d) {
+        return "rgb(0, 0, " + (d.value * 10) + ")"
+      })
+  });
 
 svg.selectAll("text")
   .data(dataset, key)
@@ -73,7 +83,8 @@ svg.selectAll("text")
   })
   .attr("font-family", "sans-serif")
   .attr("font-size", "11px")
-  .attr("fill", "white");
+  .attr("fill", "white")
+  .style("pointer-events", "none"); // keep mouseover working
 
 d3.selectAll("p")
 .on("click", function() {
@@ -108,7 +119,17 @@ d3.selectAll("p")
       return yScale(d.value);
     })
     .attr("fill", function(d) {
-      return "rgb(0, 0, " + (d.value * 10) + ")";
+      return "rgb(0, 0, " + (d.value * 10) + ")"
+    })
+    .on("mouseover", function() {
+      d3.select(this)
+        .attr("fill", "orange");
+    })
+    .on("mouseout", function(d) {
+      d3.select(this)
+        .attr("fill", function(d) {
+          return "rgb(0, 0, " + (d.value * 10) + ")"
+        })
     });
   bars.transition()
     .duration(500)
@@ -142,7 +163,8 @@ d3.selectAll("p")
     })
     .attr("font-family", "sans-serif")
     .attr("font-size", "11px")
-    .attr("fill", "white");
+    .attr("fill", "white")
+    .style("pointer-events", "none");
   labels.transition()
     .duration(500)
     .attr("x", function(d, i) {
